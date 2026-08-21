@@ -224,3 +224,10 @@ notes.txt
 
 # Mac
 .DS_Store
+
+# Vendor static files
+src/staticfiles/vendors
+
+# Ignore local static file root
+# or "local cdn"
+local-cdn/

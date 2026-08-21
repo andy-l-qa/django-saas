@@ -3,3 +3,4 @@ gunicorn
 python-decouple
 psycopg[binary]
 dj-database-url # for reading DB connection in one string
+requests # to download cdn content from URL to folder

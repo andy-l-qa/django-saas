@@ -25,10 +25,11 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = str(os.environ.get("DEBUG")).lower() == "true"
+# +++
 DEBUG = config("DJANGO_DEBUG", cast=bool)
-
-print("DEBUG", DEBUG, type(DEBUG))
-
+# +++
+# print("DEBUG", DEBUG, type(DEBUG))
+# +++
 ALLOWED_HOSTS = [
     ".railway.app" # https://saas.prod.railway.app
 ]
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # my apps
+    'commando',
     'visits',
 ]
 
@@ -93,8 +95,10 @@ DATABASES = {
     }
 }
 
-DATABASE_URL = config("DATABASE_URL", cast=str)
-
+# +++
+CONN_MAX_AGE = config("CONN_MAX_AGE", cast=int, default=300)
+DATABASE_URL = config("DATABASE_URL", default=None)
+# +++
 if DATABASE_URL is not None:
     import dj_database_url
     DATABASES = {
@@ -140,6 +144,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# +++ Custom:
+STATICFILES_BASE_DIR = BASE_DIR / "staticfiles"
+STATICFILES_BASE_DIR.mkdir(exist_ok=True, parents=True) # Removes warning: ?: (staticfiles.W004) The directory 'C:\Users\A\Career\Profiles\QA\Repos\coding-entrepreneurs-django-saas\src\staticfiles' in the STATICFILES_DIRS setting does not exist.
+STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / "vendors"
+
+# +++ Sourse for python manage.py collectstatic
+STATICFILES_DIRS = [
+    STATICFILES_BASE_DIR
+]
+
+# +++ output for python manage.py collectstatic
+# local cdn
+# STATIC_ROOT = BASE_DIR.parent / "local-cdn"
+STATIC_ROOT = BASE_DIR / "local-cdn"
+# if not DEBUG:
+#     STATIC_ROOT = BASE_DIR / "prod-cdn"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
