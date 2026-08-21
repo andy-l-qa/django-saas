@@ -44,6 +44,7 @@ COPY ./src /code
 RUN pip install -r /tmp/requirements.txt
 # RUN pip install gunicorn
 
+# Get env variables from Railway during buid phase
 ARG DJANGO_SECRET_KEY
 ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
 

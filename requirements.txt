@@ -4,3 +4,4 @@ python-decouple
 psycopg[binary]
 dj-database-url # for reading DB connection in one string
 requests # to download cdn content from URL to folder
+whitenoise>=6.12,<6.13 # simplified static file serving for Python web apps
